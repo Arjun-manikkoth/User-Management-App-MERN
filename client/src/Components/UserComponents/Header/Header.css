@@ -1,0 +1,94 @@
+/* Header.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background-color: #007bff;
+  padding: 15px 30px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo .name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  margin-right: 30px;
+}
+
+.nav-links li {
+  margin-left: 20px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #ffcb05;
+}
+
+.cta-btn {
+  background-color: #ffcb05;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+  background-color: #e5b800;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .cta-btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo a {
+    font-size: 1.5rem;
+  }
+
+  .cta-btn {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+}
