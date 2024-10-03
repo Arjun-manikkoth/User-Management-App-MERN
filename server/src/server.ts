@@ -1,8 +1,8 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express} from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { connectDB } from './database/database';
-
+import { connectDB } from './Database/database';
+import userRouter from './Routes/userRoute'
 
 dotenv.config();
 
@@ -14,9 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-app.get('/health', (_req: Request, res: Response) => {
-    res.status(200).send('Server is running');
-}); 
+app.use('/user',userRouter); 
 
 
 
