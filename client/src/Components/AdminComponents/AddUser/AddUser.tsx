@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./SignUp.css";
+import "./AddUser.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
-const SignUp: React.FC = () => {
-  const navigate = useNavigate();
-
+const AddUser: React.FC = () => {
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
@@ -15,16 +13,13 @@ const SignUp: React.FC = () => {
     passwordConfirm: "",
   });
 
+  const navigate = useNavigate();
+
   //validate email
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
-  //redirect to signin page
-  function handleSignInClick(): void {
-    navigate("/sign-in");
-  }
 
   //controlled component state updation
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -73,7 +68,7 @@ const SignUp: React.FC = () => {
 
     if (isValid) {
       //sending form data to server
-      fetch("/user/sign-up", {
+      fetch("/admin/add-user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -85,15 +80,7 @@ const SignUp: React.FC = () => {
         })
         .then((data) => {
           if (data?.user?.name) {
-            setFormData({
-              userName: "",
-              email: "",
-              phone: "",
-              password: "",
-              passwordConfirm: "",
-            });
-
-            toast.success(`Hi ${data.user.name},Please Signin to continue`);
+            navigate("/admin/dashboard");
           } else {
             toast.error("Email Already Exists");
           }
@@ -105,13 +92,13 @@ const SignUp: React.FC = () => {
   }
 
   return (
-    <div className="signup-container">
+    <div className="add-user-container">
       <ToastContainer position="bottom-right" />
-      <div className="signup-box">
-        <div className="signup-header">
-          <h2>Create Your Account</h2>
+      <div className="add-user-box">
+        <div className="add-user-header">
+          <h2>Add User</h2>
         </div>
-        <form className="signup-form" onSubmit={onSubmitSignUp}>
+        <form className="add-user-form" onSubmit={onSubmitSignUp}>
           <div className="form-group">
             <label htmlFor="userName">Username</label>
             <input
@@ -167,16 +154,13 @@ const SignUp: React.FC = () => {
             />
           </div>
 
-          <button type="submit" className="signup-btn">
-            Sign Up
+          <button type="submit" className="add-user-btn">
+            Create User
           </button>
         </form>
-        <div className="signin-link" onClick={handleSignInClick}>
-          Login to Your Account?
-        </div>
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default AddUser;

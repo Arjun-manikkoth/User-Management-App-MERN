@@ -1,7 +1,7 @@
 import React from 'react'
 import Error from '../../Components/UserComponents/Error/Error'
 
-function fallback() {
+function Fallback() {
   return (
     <div>
       <Error/>
@@ -9,5 +9,5 @@ function fallback() {
   )
 }
 
-export default fallback
+export default Fallback
 

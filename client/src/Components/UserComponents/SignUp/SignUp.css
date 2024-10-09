@@ -17,6 +17,9 @@ body {
   font-weight: 500;
   padding-top: 20px;
 }
+.signin-link:hover{
+  cursor: context-menu;
+}
 .signup-container{
   width: 400px!important;
   max-width: 700px; 

@@ -10,23 +10,15 @@ body {
   display: grid;
   place-items: center;
 }
-.signup-link {
-  font-size: 0.9rem;
-  color: #0460c3;
-  font-weight: 500;
-  padding-top: 15px;
-}
-.signup-link:hover {
-  cursor: context-menu;
-}
-.signin-container {
+
+.signin-container-admin {
   width: 360px !important;
   max-width: 700px;
   margin: 0;
   margin-top: 30%;
 }
 
-.signin-box {
+.signin-box-admin {
   background-color: #fff;
   padding: 40px;
   border-radius: 12px;
@@ -34,28 +26,28 @@ body {
   text-align: center;
 }
 
-.signin-header h2 {
+.signin-header-admin h2 {
   font-size: 1.8rem;
   color: #333;
 }
 
-.signin-header {
+.signin-header-admin {
   padding-bottom: 35px;
 }
 
-.signin-form .form-group {
+.signin-form-admin .form-group {
   margin-bottom: 20px;
   text-align: left;
 }
 
-.signin-form .form-group label {
+.signin-form-admin .form-group label {
   display: block;
   font-size: 0.9rem;
   margin-bottom: 5px;
   color: #333;
 }
 
-.signin-form .form-group input {
+.signin-form-admin .form-group input {
   width: 100%;
   padding: 12px 15px;
   border: 1px solid #ccc;
@@ -64,12 +56,12 @@ body {
   transition: border-color 0.3s ease;
 }
 
-.signin-form .form-group input:focus {
+.signin-form-admin .form-group input:focus {
   border-color: #007bff;
   outline: none;
 }
 
-.signin-btn {
+.signin-btn-admin {
   width: 100%;
   padding: 14px;
   background-color: #007bff;
@@ -82,11 +74,11 @@ body {
   font-weight: bold;
 }
 
-.signin-btn:hover {
+.signin-btn-admin:hover {
   background-color: #0056b3;
 }
 
-.signin-box p {
+.signin-box-admin p {
   margin-top: 20px;
   font-size: 0.9rem;
   color: #777;
@@ -94,34 +86,34 @@ body {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-  .signin-box {
+  .signin-box-admin {
     padding: 20px;
   }
 
-  .signin-header h2 {
+  .signin-header-admin h2 {
     font-size: 1.5rem;
   }
 
-  .signin-form .form-group input {
+  .signin-form-admin .form-group input {
     padding: 10px;
   }
 
-  .signin-btn {
+  .signin-btn-admin {
     padding: 12px;
     font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
-  .signin-box {
+  .signin-box-admin {
     padding: 15px;
   }
 
-  .signin-header h2 {
+  .signin-header-admin h2 {
     font-size: 1.3rem;
   }
 
-  .signin-btn {
+  .signin-btn-admin {
     padding: 10px;
     font-size: 0.8rem;
   }

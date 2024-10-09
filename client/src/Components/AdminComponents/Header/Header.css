@@ -5,7 +5,7 @@
   box-sizing: border-box;
 }
 
-header {
+.header-admin {
   background-color: #007bff;
   padding: 15px 30px;
   position: fixed;
@@ -15,7 +15,7 @@ header {
   z-index: 1000;
 }
 
-.container {
+.container-admin {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -23,40 +23,40 @@ header {
   margin: 0 auto;
 }
 
-.logo .name {
+.logo-admin .name-admin {
   font-size: 1.8rem;
   font-weight: bold;
   color: white;
   text-decoration: none;
 }
 
-.nav {
+.nav-admin {
   display: flex;
   align-items: center;
 }
 
-.nav-links {
+.nav-links-admin {
   list-style: none;
   display: flex;
   margin-right: 30px;
 }
 
-.nav-links li {
+.nav-links-admin li {
   margin-left: 20px;
 }
 
-.nav-links li .navigation {
+.nav-links-admin li .navigation {
   text-decoration: none;
   color: white;
   font-size: 1rem;
   transition: color 0.3s ease;
 }
 
-.nav-links li .navigation:hover {
+.nav-links-admin li .navigation:hover {
   color: #ffcb05;
 }
 
-.cta-btn {
+.cta-btn-admin {
   background-color: #ffcb05;
   color: #333;
   padding: 10px 20px;
@@ -66,28 +66,28 @@ header {
   transition: background-color 0.3s ease;
 }
 
-.cta-btn:hover {
+.cta-btn-admin:hover {
   background-color: #e5b800;
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-  .nav-links {
+  .nav-links-admin {
     display: none;
   }
 
-  .cta-btn {
+  .cta-btn-admin {
     padding: 8px 15px;
     font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
-  .logo a {
+  .logo-admin a {
     font-size: 1.5rem;
   }
 
-  .cta-btn {
+  .cta-btn-admin {
     font-size: 0.8rem;
     padding: 8px 12px;
   }

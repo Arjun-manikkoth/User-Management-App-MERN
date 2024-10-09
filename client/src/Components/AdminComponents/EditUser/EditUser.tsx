@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./SignUp.css";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import "./EditUser.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const SignUp: React.FC = () => {
-  const navigate = useNavigate();
-
+const EditUser: React.FC = () => {
   const [formData, setFormData] = useState({
+    id: "",
     userName: "",
     email: "",
     phone: "",
@@ -15,16 +14,36 @@ const SignUp: React.FC = () => {
     passwordConfirm: "",
   });
 
+  const navigate = useNavigate();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetch(`/admin/edit-user/${id}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((response) => {
+        if (response.success) {
+          setFormData({
+            id: response.data._id,
+            userName: response.data.name,
+            email: response.data.email,
+            phone: response.data.phone,
+            password: "",
+            passwordConfirm: "",
+          });
+        } else {
+          navigate("/admin/dashboard");
+        }
+      });
+  }, []);
+
   //validate email
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
-  //redirect to signin page
-  function handleSignInClick(): void {
-    navigate("/sign-in");
-  }
 
   //controlled component state updation
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -58,22 +77,14 @@ const SignUp: React.FC = () => {
       isValid = false;
     }
 
-    if (formData.password.trim().length < 6) {
-      toast.error("Password must be at least 6 characters long.");
+    if (formData.password.trim() !== formData.passwordConfirm) {
+      toast.error("Passwords doesnt match");
       isValid = false;
-    } else {
-      if (formData.passwordConfirm.trim() === "") {
-        toast.error("Please Re-enter password ");
-        isValid = false;
-      } else if (formData.password.trim() !== formData.passwordConfirm) {
-        toast.error("Passwords doesnt match");
-        isValid = false;
-      }
     }
 
     if (isValid) {
       //sending form data to server
-      fetch("/user/sign-up", {
+      fetch(`/admin/update-user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,18 +95,13 @@ const SignUp: React.FC = () => {
           return res.json();
         })
         .then((data) => {
-          if (data?.user?.name) {
-            setFormData({
-              userName: "",
-              email: "",
-              phone: "",
-              password: "",
-              passwordConfirm: "",
-            });
-
-            toast.success(`Hi ${data.user.name},Please Signin to continue`);
-          } else {
+          console.log(data);
+          if (data?.email) {
             toast.error("Email Already Exists");
+          } else if (data.success) {
+            navigate("/admin/dashboard");
+          } else {
+            toast.error("User not updated");
           }
         })
         .catch((error) => {
@@ -105,13 +111,13 @@ const SignUp: React.FC = () => {
   }
 
   return (
-    <div className="signup-container">
+    <div className="edit-user-container">
       <ToastContainer position="bottom-right" />
-      <div className="signup-box">
-        <div className="signup-header">
-          <h2>Create Your Account</h2>
+      <div className="edit-user-box">
+        <div className="edit-user-header">
+          <h2>Edit User</h2>
         </div>
-        <form className="signup-form" onSubmit={onSubmitSignUp}>
+        <form className="edit-user-form" onSubmit={onSubmitSignUp}>
           <div className="form-group">
             <label htmlFor="userName">Username</label>
             <input
@@ -166,17 +172,15 @@ const SignUp: React.FC = () => {
               onChange={handleInputChange}
             />
           </div>
+          <input type="hidden" id="id" value={formData.id} />
 
-          <button type="submit" className="signup-btn">
-            Sign Up
+          <button type="submit" className="edit-user-btn">
+            Update User
           </button>
         </form>
-        <div className="signin-link" onClick={handleSignInClick}>
-          Login to Your Account?
-        </div>
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default EditUser;

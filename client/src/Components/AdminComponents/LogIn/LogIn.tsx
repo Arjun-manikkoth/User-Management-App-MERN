@@ -1,26 +1,19 @@
 import React, { useState } from "react";
-import "./SignIn.css";
 import { useNavigate } from "react-router-dom";
+import "./LogIn.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
-//import { RootState } from "../../../redux/store";
-import { setUser } from "../../../redux/user/userSlice";
+import { setAdmin } from "../../../redux/admin/adminSlice";
 
-const SignIn: React.FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  //  const user = useSelector((state: RootState) => state.user);
-
+const Login: React.FC = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  function handleSignUpClick(): void {
-    navigate("/sign-up");
-  }
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //validate email
   const validateEmail = (email: string): boolean => {
@@ -54,7 +47,7 @@ const SignIn: React.FC = () => {
 
     if (isValid) {
       //sending form data to server
-      fetch("/user/sign-in", {
+      fetch("/admin/sign-in", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,9 +59,9 @@ const SignIn: React.FC = () => {
         })
         .then((response) => {
           if (response?.token) {
-            dispatch(setUser(response.user));
             localStorage.setItem("jwt", response.token);
-            navigate("/home");
+            dispatch(setAdmin({ isLogged: true, email: response.admin.email }));
+            navigate("/admin/dashboard");
           } else {
             toast.error(response.message);
           }
@@ -80,13 +73,13 @@ const SignIn: React.FC = () => {
   }
 
   return (
-    <div className="signin-container">
+    <div className="signin-container-admin">
       <ToastContainer position="bottom-right" />
-      <div className="signin-box">
-        <div className="signin-header">
-          <h2>SignIn To E-HUB</h2>
+      <div className="signin-box-admin">
+        <div className="signin-header-admin">
+          <h2>Admin Login</h2>
         </div>
-        <form className="signin-form" onSubmit={onSubmitSignUp}>
+        <form className="signin-form-admin" onSubmit={onSubmitSignUp}>
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
@@ -108,16 +101,12 @@ const SignIn: React.FC = () => {
               onChange={handleInputChange}
             />
           </div>
-          <button type="submit" className="signin-btn">
+          <button type="submit" className="signin-btn-admin">
             Sign In
           </button>
         </form>
-        <div className="signup-link" onClick={handleSignUpClick}>
-          Create an Account?
-        </div>
       </div>
     </div>
   );
 };
-
-export default SignIn;
+export default Login;
