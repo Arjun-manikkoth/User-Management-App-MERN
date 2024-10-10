@@ -11,6 +11,22 @@
   text-align: center;
   margin-top: 10%;
 }
+textarea:focus,
+input:focus {
+  outline: none;
+}
+.search-bar {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.search-bar input {
+  padding: 9px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+}
 
 /* Header */
 .dashboard-header {

@@ -10,6 +10,8 @@ import LoginPage from "./pages/AdminPages/LoginPage";
 import DashboardPage from "./pages/AdminPages/DashboardPage";
 import CreateUser from "./pages/AdminPages/CreateUser";
 import UpdateUser from "./pages/AdminPages/UpdateUser";
+import UserPrivate from "./Components/UserComponents/Protected/Protected";
+import AdminPrivate from "./Components/AdminComponents/Protected/Protected";
 
 function App() {
   return (
@@ -18,13 +20,19 @@ function App() {
         <Routes>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
+
+          <Route element={<UserPrivate />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+
+          <Route element={<AdminPrivate />}>
+            <Route path="/admin/dashboard" element={<DashboardPage />} />
+            <Route path="/admin/add-user" element={<CreateUser />} />
+            <Route path="/admin/edit-user/:id" element={<UpdateUser />} />
+          </Route>
 
           <Route path="/admin/sign-in" element={<LoginPage />} />
-          <Route path="/admin/dashboard" element={<DashboardPage />} />
-          <Route path="/admin/add-user" element={<CreateUser />} />
-          <Route path="/admin/edit-user/:id" element={<UpdateUser />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </Router>

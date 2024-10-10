@@ -3,14 +3,17 @@ import { useNavigate } from "react-router-dom";
 import "./LogIn.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAdmin } from "../../../redux/admin/adminSlice";
+import { RootState } from "../../../redux/store";
+import { Navigate } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const admin = useSelector((state: RootState) => state.admin);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,6 +23,11 @@ const Login: React.FC = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+
+  if (admin.token) {
+    // Redirect to home if the token exists
+    return <Navigate to="/admin/dashboard" />;
+  }
 
   //controlled component state updation
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -59,8 +67,13 @@ const Login: React.FC = () => {
         })
         .then((response) => {
           if (response?.token) {
-            localStorage.setItem("jwt", response.token);
-            dispatch(setAdmin({ isLogged: true, email: response.admin.email }));
+            dispatch(
+              setAdmin({
+                isLogged: true,
+                email: response.admin.email,
+                token: response.token,
+              })
+            );
             navigate("/admin/dashboard");
           } else {
             toast.error(response.message);

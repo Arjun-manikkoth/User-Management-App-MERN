@@ -6,6 +6,7 @@ export interface IUser extends Document {
   phone: string;
   password: string;
   isDeleted: Number;
+  url: string;
 }
 
 const userSchema: Schema = new Schema({
@@ -16,6 +17,9 @@ const userSchema: Schema = new Schema({
   isDeleted: {
     type: Number,
     default: 0,
+  },
+  url: {
+    type: String,
   },
 });
 const userModel = mongoose.model<IUser>("user", userSchema);

@@ -57,5 +57,22 @@ class UserController {
       console.log(error.message);
     }
   }
+  async imageUpload(req: Request, res: Response): Promise<void> {
+    try {
+      const status = await this.userService.storeUrl(
+        req.body.user_id,
+        req.body.url
+      );
+      console.log("this is status at server img ", status);
+      if (status) {
+        console.log("status true is sent");
+        res.status(200).json({ status: true });
+      } else {
+        res.status(400).json({ status: false });
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }
 }
 export default UserController;

@@ -8,7 +8,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.091); /* Enhanced box shadow */
   max-width: 800px;
   width: 500px;
-  margin-top: 20%!important;
+  margin-top: 20% !important;
   margin: auto;
 }
 
@@ -20,7 +20,6 @@
 
 .image-upload {
   position: relative;
-  margin-right: 20px;
 }
 
 .image-upload input {
@@ -48,6 +47,7 @@
 .profile-name {
   font-size: 1.2rem;
   color: #333;
+  padding-bottom: 5px;
 }
 
 .profile-role {
@@ -101,7 +101,7 @@
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .image-upload {
     margin-right: 0;
     margin-bottom: 15px;

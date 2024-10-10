@@ -3,6 +3,8 @@ import "./AddUser.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 const AddUser: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +14,7 @@ const AddUser: React.FC = () => {
     password: "",
     passwordConfirm: "",
   });
-
+  const admin = useSelector((state: RootState) => state.admin);
   const navigate = useNavigate();
 
   //validate email
@@ -72,6 +74,7 @@ const AddUser: React.FC = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${admin.token}`,
         },
         body: JSON.stringify(formData),
       })
@@ -79,10 +82,14 @@ const AddUser: React.FC = () => {
           return res.json();
         })
         .then((data) => {
-          if (data?.user?.name) {
-            navigate("/admin/dashboard");
+          if (data?.status === false) {
+            toast.error(data.message);
           } else {
-            toast.error("Email Already Exists");
+            if (data?.user?.name) {
+              navigate("/admin/dashboard");
+            } else {
+              toast.error("Email Already Exists");
+            }
           }
         })
         .catch((error) => {

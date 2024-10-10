@@ -23,7 +23,7 @@ class AdminController {
         );
 
         if (!isPasswordValid) {
-          res.status(400).json({ message: "Invalid password" });
+          res.status(400).json({ message: "Invalid Username/Password" });
           return;
         } else {
           //generate jwt token

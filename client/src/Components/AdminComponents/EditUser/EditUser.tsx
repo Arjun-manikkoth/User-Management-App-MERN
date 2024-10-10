@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./EditUser.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { RootState } from "../../../redux/store";
+import { useSelector } from "react-redux";
 
 const EditUser: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -13,28 +15,37 @@ const EditUser: React.FC = () => {
     password: "",
     passwordConfirm: "",
   });
-
+  const admin = useSelector((state: RootState) => state.admin);
   const navigate = useNavigate();
 
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`/admin/edit-user/${id}`)
+    fetch(`/admin/edit-user/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${admin.token}`,
+      },
+    })
       .then((res) => {
         return res.json();
       })
       .then((response) => {
-        if (response.success) {
-          setFormData({
-            id: response.data._id,
-            userName: response.data.name,
-            email: response.data.email,
-            phone: response.data.phone,
-            password: "",
-            passwordConfirm: "",
-          });
+        if (response?.status === false) {
+          toast.error(response.message);
         } else {
-          navigate("/admin/dashboard");
+          if (response.success) {
+            setFormData({
+              id: response.data._id,
+              userName: response.data.name,
+              email: response.data.email,
+              phone: response.data.phone,
+              password: "",
+              passwordConfirm: "",
+            });
+          } else {
+            navigate("/admin/dashboard");
+          }
         }
       });
   }, []);
@@ -88,6 +99,7 @@ const EditUser: React.FC = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${admin.token}`,
         },
         body: JSON.stringify(formData),
       })
@@ -95,13 +107,16 @@ const EditUser: React.FC = () => {
           return res.json();
         })
         .then((data) => {
-          console.log(data);
-          if (data?.email) {
-            toast.error("Email Already Exists");
-          } else if (data.success) {
-            navigate("/admin/dashboard");
+          if (data?.status === false) {
+            toast.error(data.message);
           } else {
-            toast.error("User not updated");
+            if (data?.email) {
+              toast.error("Email Already Exists");
+            } else if (data.success) {
+              navigate("/admin/dashboard");
+            } else {
+              toast.error("User not updated");
+            }
           }
         })
         .catch((error) => {

@@ -3,9 +3,13 @@ import { useNavigate } from "react-router-dom";
 import "./SignUp.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.user);
 
   const [formData, setFormData] = useState({
     userName: "",
@@ -15,6 +19,10 @@ const SignUp: React.FC = () => {
     passwordConfirm: "",
   });
 
+  if (user.token) {
+    // Redirect to home if the token exists
+    return <Navigate to="/home" />;
+  }
   //validate email
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

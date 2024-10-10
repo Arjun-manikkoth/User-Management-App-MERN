@@ -3,20 +3,26 @@ import "./SignIn.css";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //import { RootState } from "../../../redux/store";
 import { setUser } from "../../../redux/user/userSlice";
+import { RootState } from "../../../redux/store";
+import { Navigate } from "react-router-dom";
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  //  const user = useSelector((state: RootState) => state.user);
+  const user = useSelector((state: RootState) => state.user);
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  if (user.token) {
+    // Redirect to home if the token exists
+    return <Navigate to="/home" />;
+  }
 
   function handleSignUpClick(): void {
     navigate("/sign-up");
@@ -66,8 +72,16 @@ const SignIn: React.FC = () => {
         })
         .then((response) => {
           if (response?.token) {
-            dispatch(setUser(response.user));
-            localStorage.setItem("jwt", response.token);
+            dispatch(
+              setUser({
+                name: response.user.name,
+                email: response.user.email,
+                phone: response.user.phone,
+                id: response.user._id,
+                url: response.user.url,
+                token: response.token,
+              })
+            );
             navigate("/home");
           } else {
             toast.error(response.message);

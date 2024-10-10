@@ -48,5 +48,18 @@ class UserService implements IUserService {
       return false;
     }
   }
+  async storeUrl(id: string, url: string): Promise<boolean> {
+    try {
+      const data = await User.findByIdAndUpdate(
+        { _id: id },
+        { url },
+        { new: true }
+      );
+      return true;
+    } catch (error: any) {
+      console.log(error.message);
+      return false;
+    }
+  }
 }
 export default UserService;
