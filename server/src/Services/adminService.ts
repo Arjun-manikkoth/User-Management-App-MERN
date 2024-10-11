@@ -83,27 +83,15 @@ class AdminService {
   }
   async updateUserData(data: Partial<IUser>): Promise<boolean> {
     try {
-      let newData: Partial<IUser> = {};
-
-      if (data?.userName) {
-        newData.userName = data.userName;
-      }
-      if (data?.email) {
-        newData.email = data.email;
-      }
-      if (data?.phone) {
-        newData.phone = data.phone;
-      }
-      if (data?.password) {
-        newData.password = data.password;
-      }
-
       const updatedUser = await User.findByIdAndUpdate(
         { _id: data.id },
-        { newData },
+        {
+          name: data.userName,
+          email: data.email,
+          phone: data.phone,
+        },
         { new: true }
       );
-      console.log("this is updated user data" + updatedUser);
 
       return true;
     } catch (error: any) {

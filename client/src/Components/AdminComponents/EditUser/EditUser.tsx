@@ -12,8 +12,6 @@ const EditUser: React.FC = () => {
     userName: "",
     email: "",
     phone: "",
-    password: "",
-    passwordConfirm: "",
   });
   const admin = useSelector((state: RootState) => state.admin);
   const navigate = useNavigate();
@@ -40,8 +38,6 @@ const EditUser: React.FC = () => {
               userName: response.data.name,
               email: response.data.email,
               phone: response.data.phone,
-              password: "",
-              passwordConfirm: "",
             });
           } else {
             navigate("/admin/dashboard");
@@ -85,11 +81,6 @@ const EditUser: React.FC = () => {
       isValid = false;
     } else if (formData.phone.trim().length !== 10) {
       toast.error("Phone number must be 10 digits.");
-      isValid = false;
-    }
-
-    if (formData.password.trim() !== formData.passwordConfirm) {
-      toast.error("Passwords doesnt match");
       isValid = false;
     }
 
@@ -166,27 +157,6 @@ const EditUser: React.FC = () => {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter a password"
-              value={formData.password}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="passwordConfirm">Confirm Password</label>
-            <input
-              type="password"
-              id="passwordConfirm"
-              placeholder="Re-enter password"
-              value={formData.passwordConfirm}
-              onChange={handleInputChange}
-            />
-          </div>
           <input type="hidden" id="id" value={formData.id} />
 
           <button type="submit" className="edit-user-btn">
