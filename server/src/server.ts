@@ -1,11 +1,10 @@
 import express, { Express } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+dotenv.config();
 import { connectDB } from "./Database/database";
 import userRouter from "./Routes/userRoute";
 import adminRouter from "./Routes/adminRoute";
-
-dotenv.config();
 
 const app: Express = express();
 

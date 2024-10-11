@@ -13,9 +13,10 @@ const verifyToken = async (
     if (!token) {
       throw new Error();
     }
+
     jwt.verify(
       token,
-      process.env.JWT_SECRET || "asd568f99a9afasf67a65sf65",
+      process.env.JWT_SECRET || "adfksafadfafsdad",
       (err, decoded) => {
         if (err) {
           // Invalid token

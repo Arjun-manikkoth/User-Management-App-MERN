@@ -1,14 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const url: string = process.env.MONGODB_URI || 'mongodb://localhost:27017/crud_mern';
-    
+const url: string = process.env.MONGODB_URI || "";
 
 //database connection
-export const connectDB = async ():Promise<void> => {
-    try {
-        await mongoose.connect(url);
-        console.log('Connected to the database');
-    } catch(error) {
-        console.error(error);
-    }
-}
+export const connectDB = async (): Promise<void> => {
+  try {
+    await mongoose.connect(url);
+    console.log("Connected to the database");
+  } catch (error) {
+    console.error(error);
+  }
+};
