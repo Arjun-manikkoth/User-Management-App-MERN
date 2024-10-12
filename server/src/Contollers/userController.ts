@@ -45,7 +45,7 @@ class UserController {
           //generate jwt token
           const token = jwt.sign(
             { userId: user._id, email: user.email },
-            "asd568f99a9afasf67a65sf65",
+            process.env.JWT_SECRET || "adfksafadfafsdad",
             { expiresIn: "1h" }
           );
 
@@ -63,9 +63,8 @@ class UserController {
         req.body.user_id,
         req.body.url
       );
-      console.log("this is status at server img ", status);
+
       if (status) {
-        console.log("status true is sent");
         res.status(200).json({ status: true });
       } else {
         res.status(400).json({ status: false });

@@ -44,7 +44,7 @@ const Profile: React.FC = () => {
         })
         .then((response) => {
           console.log(response.status);
-          if (response.status) {
+          if (response?.status) {
             dispatch(
               setUser({
                 name: user.name,
